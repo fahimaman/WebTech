@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh News</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #006A4E 0%, #006A4E 100%);
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 106, 78, 0.3);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .news-image {
+            height: 200px;
+            width: 100%;
+            background: linear-gradient(135deg, #FF9933 0%, #FF9933 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-image::after {
+            content: "Bangladesh News";
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-title {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: #006A4E;
+            line-height: 1.3;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-excerpt {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .comment-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-top: 20px;
+            border: none;
+        }
+
+        .comment-section h3 {
+            color: #006A4E;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .comment-section h3::before {
+            content: "💬";
+            font-size: 1.2rem;
+        }
+
+        .comment-stats {
+            display: flex;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #006A4E 0%, #006A4E 100%);
+            color: white;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 106, 78, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .comment-form {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border-left: 4px solid #006A4E;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #006A4E;
+            box-shadow: 0 0 0 3px rgba(0, 106, 78, 0.1);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #f39c12;
+            transform: scale(1.1);
+        }
+
+        .rating-text {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #006A4E 0%, #006A4E 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #00563f 0%, #00563f 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 106, 78, 0.3);
+        }
+
+        .comments-list {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .comment {
+            border-bottom: 1px solid #eee;
+            padding: 18px 0;
+            transition: background-color 0.2s ease;
+        }
+
+        .comment:hover {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 18px 10px;
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: #006A4E;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comment-author::before {
+            content: "👤";
+            font-size: 0.9rem;
+        }
+
+        .comment-date {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .comment-rating {
+            color: #f39c12;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .comment-text {
+            line-height: 1.5;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #006A4E;
+        }
+
+        .no-comments {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            font-style: italic;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+        }
+
+        .no-comments::before {
+            content: "💭";
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #006A4E 0%, #006A4E 100%);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-radius: 12px;
+            box-shadow: 0 -4px 15px rgba(0, 106, 78, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .news-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .comment-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .rating-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Bangladesh News</div>
+            <div class="tagline">Your Trusted Source for Latest Updates</div>
+        </header>
+
+        <div class="news-container">
+           
+            <div class="news-card">
+                <div class="news-image"></div>
+                <div class="news-content">
+                    <h2 class="news-title">Bangladesh ready for 'emotional, high-voltage' India clash, says Jamal</h2>
+                    <div class="news-meta">
+                        <span>By Isteak Ahammad Fahim</span>
+                        <span>Mon Nov 17, 2025 03:30 PM</span>
+                    </div>
+                    <div class="news-excerpt">
+                        <p>Despite both sides already being eliminated from the qualification race, there has been a lot of buzz surrounding the fixture, which will take place at the National Stadium at 8pm.</p>
+                        
+                        <p>Their last meeting ended in a goalless draw in Shillong in March this year—the opening match of this qualifying campaign.</p>
+                        
+                        <p>Speaking ahead of the contest today, Jamal described the match as one charged with emotion--not just for the players, but for the whole country.</p>
+                        
+                        <p>"A very emotional, high-voltage match," he said.</p>
+                        
+                        <p>"After this match, there will be a long break for the national team. If we can finish the year with a win, it will be positive not only for us but also for the supporters and for you all. So, the match is emotional for me, but at the same time we have to play using our brains," Jamal continued.</p>
+                        
+                        <p>Bhuyan expects the tension to be visible on the field.</p>
+                        
+                        <p>"There will be many free kicks in tomorrow's match, there will be yellow cards, there will be shouting. But I will take it as a normal match. Still, I know the importance of this match."</p>
+                        
+                        <p>Bangladesh have not beaten India in 22 years, with their last victory dating back to the 2003 SAFF Championship semifinal in Dhaka, when Matiur Munna's golden goal earned a 2–1 win.</p>
+                        
+                        <p>Despite the recent results, the Bangladesh captain believes the team entering this match is one of the strongest in recent years.</p>
+                        
+                        <p>"Given our current situation, this is Bangladesh's strongest squad. So of course we have a big opportunity."</p>
+                        
+                        <p>He also praised the growing chemistry between himself and Hamza Choudhury.</p>
+                        
+                        <p>"I am lucky that I could assist Hamza--a corner and a bicycle kick. The bicycle-kick goal is one of the best I've seen for Bangladesh. It will definitely be number one."</p>
+                        
+                        <p>"Hamza has come from abroad, just like me. Our understanding is very good… So this understanding started off the field."</p>
+                        
+                        <p>Jamal acknowledged that pressure is normal for top-level footballers but emphasised that it comes from every direction ahead of this India clash.</p>
+                        
+                        <p>"There is always pressure, but handling it is my job."</p>
+                        
+                        <p>He also noted that the excitement is not confined to football circles alone.</p>
+                        
+                        <p>"Bangladesh's cricket coach met me this morning and asked about the match. He said he would also be at the stadium. So even from the cricket side, they are excited… All of Bangladesh will watch the match."</p>
+                        
+                        <p>Looking at the tactical side, Jamal believes Bangladesh can exploit India's defensive line if the visitors choose to press high.</p>
+                        
+                        <p>"We definitely have problems in defense. But if India pushes high and plays up front, we will get a lot of space in attack."</p>
+                        
+                        <p>He highlighted Rakib Hossain, whose speed he considers unmatched in the region.</p>
+                        
+                        <p>"Rakib is probably the fastest player in South Asia. If we can use him properly, then regardless of whether it's Sandesh [Jhingan] or Rahul [Bheke] at the back—he will kill their defense."</p>
+                    </div>
+                </div>
+                
+               
+                <div class="comment-section">
+                    <h3>Comments</h3>
+                    
+                   
+                    <div class="comment-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="total-comments-1">0</div>
+                            <div class="stat-label">Total Comments</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="average-rating-1">0.0</div>
+                            <div class="stat-label">Average Rating</div>
+                        </div>
+                    </div>
+
+                   
+                    <form class="comment-form" id="comment-form-1">
+                        <div class="form-group">
+                            <label for="name-1">Name *</label>
+                            <input type="text" id="name-1" class="form-control" placeholder="Your name">
+                            <div class="error-message" id="name-error-1">Name should be between 2 and 50 characters</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email-1">Email</label>
+                            <input type="email" id="email-1" class="form-control" placeholder="Your email (optional)">
+                            <div class="error-message" id="email-error-1">Please enter a valid email address</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment-1">Comment *</label>
+                            <textarea id="comment-1" class="form-control" placeholder="Share your thoughts..."></textarea>
+                            <div class="error-message" id="comment-error-1">Comment should be between 10 and 500 characters</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Rating (Optional)</label>
+                            <div class="rating-container">
+                                <div class="star-rating" id="star-rating-1">
+                                    <span class="star" data-value="1">★</span>
+                                    <span class="star" data-value="2">★</span>
+                                    <span class="star" data-value="3">★</span>
+                                    <span class="star" data-value="4">★</span>
+                                    <span class="star" data-value="5">★</span>
+                                </div>
+                                <div class="rating-text" id="rating-text-1">No rating selected</div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn">Post Comment</button>
+                    </form>
+
+                
+                    <div class="comments-list" id="comments-list-1">
+                        <div class="no-comments">No comments yet. Be the first to share your thoughts!</div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="news-card">
+                <div class="news-image"></div>
+                <div class="news-content">
+                    <h2 class="news-title">European qualifiers: Who can qualify for 2026 World Cup in final round</h2>
+                    <div class="news-meta">
+                        <span>By Michael Chen</span>
+                        <span>Sun Nov 16, 2025 08:25 AM</span>
+                    </div>
+                    <div class="news-excerpt">
+                        <p>Germany host Slovakia in a winner-takes-all clash for qualification. If Germany avoid defeat, they will qualify for the finals, if not, it will be Slovakia heading to North America for their first global showpiece appearance since 2010 in South Africa.</p>
+                        
+                        <p>Whoever finishes second will be in the play-offs, alongside third-placed Northern Ireland, who have made the play-offs through the Nations League.</p>
+                        
+                        <p><strong>Group B</strong><br>
+                        (Switzerland, Kosovo, Slovenia, Sweden)<br>
+                        -- Switzerland will qualify for a sixth successive World Cup finals if they avoid losing to Kosovo, who are guaranteed a play-off spot, by six or more goals. Kosovo are bidding for a first ever qualification for a major tournament.</p>
+                        
+                        <p><strong>Group C</strong><br>
+                        (Denmark, Scotland, Greece, Belarus)<br>
+                        -- Denmark will qualify if they avoid defeat at Scotland, who must win to take their place. Whichever one misses out will be in the play-offs.</p>
+                        
+                        <p><strong>Group D</strong><br>
+                        (France, Ukraine, Iceland, Azerbaijan)<br>
+                        -- Two-time World Cup winners France have already qualified.<br>
+                        Third-placed Ukraine host second-placed Iceland needing to win to snatch a play-off spot ahead of their visitors.</p>
+                        
+                        <p><strong>Group E</strong><br>
+                        (Spain, Turkey, Georgia, Bulgaria)<br>
+                        -- European champions Spain will qualify if they avoid an unlikely seven-goal defeat at home to Turkey, who are guaranteed at least a play-off spot.</p>
+                        
+                        <p><strong>Group F</strong><br>
+                        (Portugal, Hungary, Republic of Ireland, Armenia)<br>
+                        -- Portugal and Cristiano Ronaldo, who is suspended for the final match, will secure their ticket to the finals if they beat Armenia, or if Hungary draw at home to Ireland. All three sides could still win the group but Ireland must win to snatch at least a play-off spot.</p>
+                        
+                        <p><strong>Group G</strong><br>
+                        (Netherlands, Poland, Finland, Lithuania, Malta)<br>
+                        -- The Netherlands are all but mathematically assured of qualification but can secure it by avoiding defeat against rock-bottom Lithuania. Poland, who are guaranteed at least a play-off spot, must beat Malta, hope that the Netherlands lose and somehow overturn a goal difference deficit of 13 to take top spot.</p>
+                        
+                        <p><strong>Group H</strong><br>
+                        (Austria, Bosnia and Herzegovina, Romania, Cyprus, San Marino)<br>
+                        -- Austria will confirm first place if avoid defeat at home to Bosnia, who must win to snatch top spot, otherwise they will head to the play-offs.</p>
+                        
+                        <p><strong>Group I</strong><br>
+                        (Norway, Italy, Israel, Estonia, Moldova)<br>
+                        -- Norway will reach their first World Cup since 1998 unless they lose by nine or more goals to second-placed Italy, who are almost certain to head to the play-offs for the third World Cup qualification campaign in a row.</p>
+                        
+                        <p><strong>Group J</strong><br>
+                        (Belgium, North Macedonia, Wales, Kazakhstan, Liechtenstein)<br>
+                        -- Belgium will qualify if they beat rock-bottom Liechtenstein at home, or if North Macedonia and Wales draw in Cardiff. All three could yet top the group but Wales must win to secure at least a play-off place.</p>
+                        
+                        <p><strong>Group K</strong><br>
+                        (England, Albania, Serbia, Latvia, Andorra)<br>
+                        -- England have already qualified and Albania are in the play-offs.</p>
+                        
+                        <p><strong>Group L</strong><br>
+                        (Croatia, Czech Republic, Faroe Islands, Montenegro, Gibraltar)<br>
+                        -- Croatia have already qualified and the Czech Republic are in the play-offs.</p>
+                    </div>
+                </div>
+                
+              
+                <div class="comment-section">
+                    <h3>Comments</h3>
+                    
+                    
+                    <div class="comment-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="total-comments-2">0</div>
+                            <div class="stat-label">Total Comments</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="average-rating-2">0.0</div>
+                            <div class="stat-label">Average Rating</div>
+                        </div>
+                    </div>
+
+                   
+                    <form class="comment-form" id="comment-form-2">
+                        <div class="form-group">
+                            <label for="name-2">Name *</label>
+                            <input type="text" id="name-2" class="form-control" placeholder="Your name">
+                            <div class="error-message" id="name-error-2">Name should be between 2 and 50 characters</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email-2">Email</label>
+                            <input type="email" id="email-2" class="form-control" placeholder="Your email (optional)">
+                            <div class="error-message" id="email-error-2">Please enter a valid email address</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment-2">Comment *</label>
+                            <textarea id="comment-2" class="form-control" placeholder="Share your thoughts..."></textarea>
+                            <div class="error-message" id="comment-error-2">Comment should be between 10 and 500 characters</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Rating (Optional)</label>
+                            <div class="rating-container">
+                                <div class="star-rating" id="star-rating-2">
+                                    <span class="star" data-value="1">★</span>
+                                    <span class="star" data-value="2">★</span>
+                                    <span class="star" data-value="3">★</span>
+                                    <span class="star" data-value="4">★</span>
+                                    <span class="star" data-value="5">★</span>
+                                </div>
+                                <div class="rating-text" id="rating-text-2">No rating selected</div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn">Post Comment</button>
+                    </form>
+
+                    
+                    <div class="comments-list" id="comments-list-2">
+                        <div class="no-comments">No comments yet. Be the first to share your thoughts!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Bangladesh News. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+       
+        const commentsData = {
+            1: [],
+            2: []
+        };
+
+      
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            for (let i = 1; i <= 2; i++) {
+                setupCommentSection(i);
+            }
+        });
+
+        
+        function setupCommentSection(articleId) {
+          
+            const commentForm = document.getElementById(`comment-form-${articleId}`);
+            const commentsList = document.getElementById(`comments-list-${articleId}`);
+            const totalCommentsEl = document.getElementById(`total-comments-${articleId}`);
+            const averageRatingEl = document.getElementById(`average-rating-${articleId}`);
+            const stars = document.querySelectorAll(`#star-rating-${articleId} .star`);
+            const ratingText = document.getElementById(`rating-text-${articleId}`);
+            
+            let selectedRating = 0;
+
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.getAttribute('data-value'));
+                    updateStarDisplay();
+                });
+            });
+
+            function updateStarDisplay() {
+                stars.forEach(star => {
+                    const starValue = parseInt(star.getAttribute('data-value'));
+                    if (starValue <= selectedRating) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
+                });
+
+                if (selectedRating === 0) {
+                    ratingText.textContent = 'No rating selected';
+                } else {
+                    ratingText.textContent = `${selectedRating} star${selectedRating > 1 ? 's' : ''} selected`;
+                }
+            }
+
+            
+            function validateName(name) {
+                return name.trim().length >= 2 && name.trim().length <= 50;
+            }
+
+            function validateEmail(email) {
+                if (email.trim() === '') return true;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            function validateComment(comment) {
+                return comment.trim().length >= 10 && comment.trim().length <= 500;
+            }
+
+            
+            function showError(elementId, message) {
+                const errorElement = document.getElementById(elementId);
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+
+            
+            function hideError(elementId) {
+                const errorElement = document.getElementById(elementId);
+                errorElement.style.display = 'none';
+            }
+
+            
+            function calculateAverageRating() {
+                const comments = commentsData[articleId];
+                if (comments.length === 0) return 0;
+                
+                const ratings = comments
+                    .filter(comment => comment.rating > 0)
+                    .map(comment => comment.rating);
+                
+                if (ratings.length === 0) return 0;
+                
+                const sum = ratings.reduce((total, rating) => total + rating, 0);
+                return (sum / ratings.length).toFixed(1);
+            }
+
+          
+            function updateStatistics() {
+                totalCommentsEl.textContent = commentsData[articleId].length;
+                averageRatingEl.textContent = calculateAverageRating();
+            }
+
+            // Format date
+            function formatDate(date) {
+                return new Date(date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            
+            function displayComments() {
+                const comments = commentsData[articleId];
+                if (comments.length === 0) {
+                    commentsList.innerHTML = '<div class="no-comments">No comments yet. Be the first to share your thoughts!</div>';
+                    return;
+                }
+
+                commentsList.innerHTML = '';
+                comments.forEach(comment => {
+                    const commentElement = document.createElement('div');
+                    commentElement.className = 'comment';
+                    
+                    let ratingHTML = '';
+                    if (comment.rating > 0) {
+                        ratingHTML = `<div class="comment-rating">${'★'.repeat(comment.rating)}</div>`;
+                    }
+                    
+                    commentElement.innerHTML = `
+                        <div class="comment-header">
+                            <div class="comment-author">${comment.name}</div>
+                            <div class="comment-date">${formatDate(comment.date)}</div>
+                        </div>
+                        ${ratingHTML}
+                        <div class="comment-text">${comment.text}</div>
+                    `;
+                    
+                    commentsList.appendChild(commentElement);
+                });
+            }
+
+            
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                
+                const name = document.getElementById(`name-${articleId}`).value;
+                const email = document.getElementById(`email-${articleId}`).value;
+                const commentText = document.getElementById(`comment-${articleId}`).value;
+                
+               
+                let isValid = true;
+                
+                if (!validateName(name)) {
+                    showError(`name-error-${articleId}`, 'Name should be between 2 and 50 characters');
+                    isValid = false;
+                } else {
+                    hideError(`name-error-${articleId}`);
+                }
+                
+                if (!validateEmail(email)) {
+                    showError(`email-error-${articleId}`, 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    hideError(`email-error-${articleId}`);
+                }
+                
+                if (!validateComment(commentText)) {
+                    showError(`comment-error-${articleId}`, 'Comment should be between 10 and 500 characters');
+                    isValid = false;
+                } else {
+                    hideError(`comment-error-${articleId}`);
+                }
+                
+                
+                if (isValid) {
+                    const newComment = {
+                        name: name.trim(),
+                        email: email.trim(),
+                        text: commentText.trim(),
+                        rating: selectedRating,
+                        date: new Date().toISOString()
+                    };
+                    
+                    commentsData[articleId].unshift(newComment);
+                    
+                    
+                    commentForm.reset();
+                    selectedRating = 0;
+                    updateStarDisplay();
+                    
+                    
+                    displayComments();
+                    updateStatistics();
+                    
+                    alert('Your comment has been posted successfully!');
+                }
+            });
+
+            
+            updateStatistics();
+            displayComments();
+        }
+    </script>
+</body>
+</html>
