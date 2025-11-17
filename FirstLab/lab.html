@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body> <form>
+    <label for="fname">First Name:</label>
+    <br>
+    <input type="text" id="fname" name="fname" placeholder="Your First Name" required><br>
+    <label for="lname">Last Name:</label>
+    <br>
+    <input type="text" id="lname" name="lname" required><br>
+    <label for="email">Email:</label>
+    <br>
+    <input type="email" size="25" id="email" name="email" required><br>
+    <label for="number">Number:</label>
+    <br>
+    <input type="tel" id="number" name="number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="ex:017-4568-7890" required><br>
+    <label for="Gender"></label>
+    <input type="radio" id="male" name="gender" value="Male" required>
+    <label for="male">Male</label>
+    <br>
+    <input type="radio" id="fmale" name="gender" value="FeMale" required >
+    <label for="fmale">FeMale</label>
+    <br>
+    <input type="radio" id="other" name="gender" value="Other" required>
+    <label for="other">Other</label>
+    <br>
+    <label for="country">Country</label>
+    <select name="country" id="country" required>
+        <option value="">Select a County</option>
+        <option value="Australia">USA</option>
+        <option value="Bangladesh">Bangladesh</option>
+        <option value="Canada">Canada</option>
+        <option value="Europe">Europe</option>
+        <option value="Africa">Africa</option>
+    </select>
+    <br>
+    <label for="dob">Date of Birth</label>
+    <br>
+    <input type="date" id="date" name="dob" required>
+    <br>
+    <label for="address">Address</label>
+    <br>
+    <textarea name="address" id="address" name="address" required></textarea>
+    <br>
+    <input type="submit" value="Sumbit">
+    <input type="reset" value="Reset"><br>
+    <label for=password>Enter Your Password</label><br>
+    <input type="password" id="pwd" name="pwd" minlength="4" maxlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+    <br>
+    <input type="submit" value="Submit">
+    <button type="reset">Clear</button>
+
+
+
+    
+
+
+    </form>
+
+</body>
+</html>
